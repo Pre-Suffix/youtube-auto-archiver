@@ -1,0 +1,29 @@
+{
+  "name": "youtube-auto-archiver",
+  "version": "0.1.0",
+  "description": "Recieves GET requests from an API to automatically download YouTube videos to a set location.",
+  "main": "src/index.js",
+  "scripts": {
+    "run": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pre-Suffix/youtube-auto-archiver.git"
+  },
+  "keywords": [
+    "youtube",
+    "yt-dlp",
+    "archiving"
+  ],
+  "author": "PreSuffix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pre-Suffix/youtube-auto-archiver/issues"
+  },
+  "homepage": "https://github.com/Pre-Suffix/youtube-auto-archiver#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "youtube-dl-exec": "^3.0.20"
+  }
+}
