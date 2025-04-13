@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "yt-archiver",
+    "version": "1.0",
+
+    "description": "Sends a youtube video to be saved.",
+
+    "icons": {
+        "16": "icons/icon.png",
+        "64": "icons/icon-64.png"
+    },
+
+    "permissions": ["tabs", "contextMenus"],
+    "background": {
+        "scripts": ["app.js"]
+    },
+    
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "yt-archiver@presuffix.net"
+        }
+    },
+    "content_scripts": [],
+    "browser_action": {
+        "default_icon": {
+            "64": "icons/icon-64.png"
+        }
+    }
+
+}

@@ -1,4 +1,10 @@
 # CONFIGURATION FILE
+
+# Directory where all the videos will be saved to.
 DIRECTORY = ""
+
+# Password for authentication
 PASS = "PASSWORD"
+
+# Port the webserver will be hosted in
 PORT = 8088
