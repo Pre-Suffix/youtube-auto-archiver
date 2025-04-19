@@ -21,22 +21,37 @@ async function main() {
         console.log("Downloading video " + req.query.id);
 
         // Summon YT-DLP to download video
-        youtubedl("https://www.youtube.com/watch?v=" + req.query.id, {
-            paths: DIRECTORY, // Download to the directory defined by .env variable
-            output: "%(title)s.%(ext)s", // Set video name to its title
-            windowsFilenames: true, // Change uncompatible characters to Windows-supported ones
-            noCheckCertificates: true,
-            noWarnings: true,
-            preferFreeFormats: true,
-            
-            // Embed multiple video data into download
-            embedThumbnail: true,
-            embedSubs: true,
-            embedMetadata: true,
-            embedChapters: true,
-            addHeader: ['referer:youtube.com', 'user-agent:googlebot']
-        })
-        .then(() => { console.log("Finished downloading video " + req.query.id); });
+        try {
+            youtubedl("https://www.youtube.com/watch?v=" + req.query.id, {
+                paths: DIRECTORY, // Download to the directory defined by .env variable
+                output: "%(title)s.%(ext)s", // Set video name to its title
+                windowsFilenames: true, // Change uncompatible characters to Windows-supported ones
+                noCheckCertificates: true,
+                noWarnings: true,
+                preferFreeFormats: true,
+                
+                // Embed multiple video data into download
+                embedThumbnail: true,
+                embedSubs: true,
+                embedMetadata: true,
+                embedChapters: true,
+                addHeader: ['referer:youtube.com', 'user-agent:googlebot']
+            })
+            .then(() => { console.log("Finished downloading video " + req.query.id); });
+        } catch (error) {
+            youtubedl("https://www.youtube.com/watch?v=" + req.query.id, {
+                paths: DIRECTORY, // Download to the directory defined by .env variable
+                output: "%(title)s.%(ext)s", // Set video name to its title
+                windowsFilenames: true, // Change uncompatible characters to Windows-supported ones
+                noCheckCertificates: true,
+                noWarnings: true,
+                preferFreeFormats: true,
+                addHeader: ['referer:youtube.com', 'user-agent:googlebot']
+            })
+            .catch((e) => { console.log("Couldn't download video " + req.query.id + ". Reason: ", e); })
+            .then(() => { console.log("Finished downloading video " + req.query.id + " in safety mode."); });
+        }
+
     });
 
     // Start web server
