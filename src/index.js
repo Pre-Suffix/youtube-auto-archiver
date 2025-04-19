@@ -14,6 +14,10 @@ async function main() {
         else if(!req.query.id) return res.sendStatus(418); // If there is no ID, return HTTP 418
         else if(req.query.id.length != 11) return res.sendStatus(404); // If the ID is invalid, return HTTP 404
 
+        // Check if user requested full download
+        const full = req.query.full ?? false;
+        if(!full) req.query.full = req.query.full == "yes";
+
         // Return that request was properly recieved
         res.sendStatus(200);
 
@@ -21,7 +25,7 @@ async function main() {
         console.log("Downloading video " + req.query.id);
 
         // Summon YT-DLP to download video
-        try {
+        if(full)
             youtubedl("https://www.youtube.com/watch?v=" + req.query.id, {
                 paths: DIRECTORY, // Download to the directory defined by .env variable
                 output: "%(title)s.%(ext)s", // Set video name to its title
@@ -38,7 +42,7 @@ async function main() {
                 addHeader: ['referer:youtube.com', 'user-agent:googlebot']
             })
             .then(() => { console.log("Finished downloading video " + req.query.id); });
-        } catch (error) {
+        else
             youtubedl("https://www.youtube.com/watch?v=" + req.query.id, {
                 paths: DIRECTORY, // Download to the directory defined by .env variable
                 output: "%(title)s.%(ext)s", // Set video name to its title
@@ -48,9 +52,7 @@ async function main() {
                 preferFreeFormats: true,
                 addHeader: ['referer:youtube.com', 'user-agent:googlebot']
             })
-            .catch((e) => { console.log("Couldn't download video " + req.query.id + ". Reason: ", e); })
-            .then(() => { console.log("Finished downloading video " + req.query.id + " in safety mode."); });
-        }
+            .then(() => { console.log("Finished downloading video " + req.query.id); });
 
     });
 
