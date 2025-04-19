@@ -3,15 +3,15 @@ const PASS = "password";
 const URL = "http://localhost:8080/?pass=" + PASS + "&id=";
 
 // Function to request video save
-async function saveVideo(tab, full = false) {
+async function saveVideo(tab) {
   const url = new URL(tab.url);
   // If the URL doesn't correspond to a valid youtube video, exit function
   if(url.hostname != "www.youtube.com" || url.pathname != "/watch" || !url.searchParams.has("v")) return false;
 
   // Fetch ID from URL, then send the proper API call
   let id = url.searchParams.get("v");
-  await fetch(URL + id + (full ? "&full=yes" : ""));
-  
+  await fetch(URL + id);
+
   return true;
 }
 
@@ -23,23 +23,7 @@ browser.contextMenus.create({
   contexts: ["tab"]
 });
 
-// Setup context menu
-const saveVideoFullID = "save-yt-video-full"
-browser.contextMenus.create({
-  id: saveVideoFullID,
-  title: "Save this video w/ extras",
-  contexts: ["tab"]
-});
-
-
 // eslint-disable-next-line no-unused-vars
 browser.contextMenus.onClicked.addListener((info, tab) => {
-  switch (info.menuItemId) {
-    case "save-yt-video":
-      saveVideo(tab, false);
-      break;
-    case "save-yt-video-full":
-      saveVideo(tab, true);
-      break;
-  }
+  if(info.menuItemId == saveVideoID) saveVideo(tab);
 });
