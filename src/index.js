@@ -16,7 +16,7 @@ async function main() {
 
         // Check if user requested full download
         const full = req.query.full ?? false;
-        if(!full) req.query.full = req.query.full == "yes";
+        if(typeof full != "boolean") full = full == "yes";
 
         // Return that request was properly recieved
         res.sendStatus(200);

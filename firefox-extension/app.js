@@ -10,7 +10,7 @@ async function saveVideo(tab, full = false) {
 
   // Fetch ID from URL, then send the proper API call
   let id = url.searchParams.get("v");
-  await fetch(URL + id + "&full=" + full ? "yes" : "no");
+  await fetch(URL + id + (full ? "&full=yes" : ""));
   
   return true;
 }
@@ -34,5 +34,12 @@ browser.contextMenus.create({
 
 // eslint-disable-next-line no-unused-vars
 browser.contextMenus.onClicked.addListener((info, tab) => {
-  if(info.menuItemId == saveVideoID || info.menuItemId == saveVideoFullID) saveVideo(tab, info.menuItemId == saveVideoFullID);
+  switch (info.menuItemId) {
+    case "save-yt-video":
+      saveVideo(tab, false);
+      break;
+    case "save-yt-video-full":
+      saveVideo(tab, true);
+      break;
+  }
 });
