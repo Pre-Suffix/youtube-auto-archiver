@@ -15,7 +15,7 @@ async function main() {
         else if(req.query.id.length != 11) return res.sendStatus(404); // If the ID is invalid, return HTTP 404
 
         // Check if user requested full download
-        const full = req.query.full ?? false;
+        let full = req.query.full ?? false;
         if(typeof full != "boolean") full = full == "yes";
 
         // Return that request was properly recieved
